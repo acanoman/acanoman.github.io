@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "sudo ./init_blog.sh"
-date:   2025-12-15 19:30:00 +0100
+date:   2025-12-12 19:30:00 +0100
 categories: [General, Update]
 tags: [intro, whoami, cybersecurity]
 ---
