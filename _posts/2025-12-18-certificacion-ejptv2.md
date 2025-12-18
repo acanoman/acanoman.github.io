@@ -16,7 +16,7 @@ En este repositorio comparto mis notas de estudio, que incluyen:
 
 Esta documentación refleja mi flujo de trabajo real y mi capacidad para documentar hallazgos técnicos.
 
-### 📂 [Acceder a la Documentación Técnica (GitHub)](https://github.com/acanoman/acanoman.github.io/tree/master/2023-12-18-apuntes-eJPTv2)
+### 📂 [Acceder a la Documentación Técnica (GitHub)](https://github.com/acanoman/eJPTv2-Apuntes)
 
 ---
 *Este material está alojado en mi repositorio para consulta técnica.*
