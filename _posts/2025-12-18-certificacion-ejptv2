@@ -1,0 +1,22 @@
+---
+layout: post
+title: "Certificación eJPTv2: Documentación y Metodología"
+date: 2025-12-18
+categories: ciberseguridad
+author: acanoman
+description: "Acceso público a mis notas técnicas, laboratorios y cheat-sheets de la certificación Junior Penetration Tester."
+---
+
+He completado la certificación **eJPTv2 (Junior Penetration Tester)** y he decidido hacer pública mi documentación técnica.
+
+En este repositorio comparto mis notas de estudio, que incluyen:
+* 📜 **Metodologías** de enumeración y explotación.
+* 🛠️ **Comandos y herramientas** (Nmap, Metasploit, Burp Suite).
+* 📝 **Reportes** de laboratorios prácticos.
+
+Esta documentación refleja mi flujo de trabajo real y mi capacidad para documentar hallazgos técnicos.
+
+### 📂 [Acceder a la Documentación Técnica (GitHub)](https://github.com/acanoman/acanoman.github.io/tree/master/2023-12-18-apuntes-eJPTv2)
+
+---
+*Este material está alojado en mi repositorio para consulta técnica.*
