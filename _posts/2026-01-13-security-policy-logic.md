@@ -37,4 +37,4 @@ In a real-world scenario, we apply **Network Segmentation**.
 * **Implementation:** Group sensitive services on specific machines and limit access routes.
 * **Tools:** Network filtering and software firewalls (like `iptables` or `nftables` in the Linux kernel) acting as checkpoints.
 
-*> Policy configuration loaded. Ready to implement.*
+*> Policy configuration loaded. Ready to implement.* 
