@@ -64,7 +64,7 @@ We compile the solution and verify that there are no errors.
 
 To test it, we create a test user on our local machine:
 
-![Creating test user](/images/10-nuevouser.png)
+
 
 <img src="/images/10-nuevouser.png" width="100%" alt="Creating test user">
 
@@ -76,7 +76,9 @@ I launched the attack to execute a whoami as that user:
 
 .\WinLogonFix.exe Prueba Password123! "cmd.exe /c whoami"
 ```
-![Final execution](/images/11-ejecucionExito.png)
+
+
+<img src="/images/11-ejecucionExito.png" width="100%" alt="Final execution">
 
 ---
 *Happy Hacking!*
