@@ -71,8 +71,9 @@ Finally, we execute the binary to launch a console (`cmd.exe`) as that user. As 
 I launched the attack to execute a whoami as that user:
 
 ```powershell
-.\WinLogonFix.exe Prueba Password123! "cmd.exe /c whoami"
 
+.\WinLogonFix.exe Prueba Password123! "cmd.exe /c whoami"
+```
 ![Final execution](/images/11-ejecucionExito.png)
 
 ---
