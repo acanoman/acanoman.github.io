@@ -66,6 +66,8 @@ To test it, we create a test user on our local machine:
 
 ![Creating test user](/images/10-nuevouser.png)
 
+<img src="/images/10-nuevouser.png" width="100%" alt="Creating test user">
+
 Finally, we execute the binary to launch a console (`cmd.exe`) as that user. As we can see, **Windows Defender does not block it** and we achieve successful execution (whoami).
 
 I launched the attack to execute a whoami as that user:
