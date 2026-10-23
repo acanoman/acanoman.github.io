@@ -9,6 +9,7 @@ layout: default
         <div class="hero-portrait">
             <!-- Retrato encapuchado. Placeholder (silueta SVG) hasta la foto real (Fase 5).
                  El face-tracker mueve los ojos e inclina la figura hacia el cursor. -->
+            <div class="portrait-shell">
             <div class="portrait-frame" id="face-tracker" data-face-mode="placeholder">
                 <svg class="portrait-svg" viewBox="0 0 200 240" role="img" aria-label="Retrato de Álvaro Cano con capucha, estilo hacker">
                     <!-- Capucha y hombros: se alarga por debajo del viewBox para que,
@@ -28,6 +29,7 @@ layout: default
                 <span class="portrait-hud portrait-hud-tl">SUBJECT</span>
                 <span class="portrait-hud portrait-hud-br">A. CANO</span>
             </div>
+            </div>
             <p class="portrait-caption"><span aria-hidden="true">[</span> TARGET: ACQUIRED <span aria-hidden="true">]</span></p>
         </div>
 
@@ -36,7 +38,7 @@ layout: default
             <h1 id="hero-title" class="glitch-text" data-text="Álvaro Cano">Álvaro <span>Cano</span></h1>
             <p class="hero-role">Cybersecurity Engineer · Red Team · Pentesting</p>
 
-            <div class="hero-terminal" aria-label="Terminal de navegación">
+            <div class="hero-terminal" role="region" aria-label="Terminal de navegación">
                 <div class="terminal-header">
                     <span class="terminal-title">visitor@acano: ~</span>
                     <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>

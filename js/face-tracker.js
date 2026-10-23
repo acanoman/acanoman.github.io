@@ -25,39 +25,49 @@
   const eyes = frame.querySelector("#portrait-eyes");
   if (!svg) return;
 
-  let lastX = window.innerWidth / 2;
-  let lastY = window.innerHeight / 2;
-  let hasMoved = false;
+  let lastX = 0;
+  let lastY = 0;
+  let hasPointer = false;
+  let framePending = false;
+
+  function clamp(value) {
+    return Math.max(-1, Math.min(1, value));
+  }
+
+  function render() {
+    framePending = false;
+    const rect = frame.getBoundingClientRect();
+    // Si el retrato está fuera de pantalla no merece la pena calcular nada.
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const dx = clamp((lastX - centerX) / (window.innerWidth / 2));
+    const dy = clamp((lastY - centerY) / (window.innerHeight / 2));
+
+    // Inclinación 3D sutil de toda la figura.
+    svg.style.transform = `perspective(600px) rotateY(${dx * 10}deg) rotateX(${-dy * 8}deg)`;
+    // Los ojos se desplazan un poco dentro del rostro.
+    if (eyes) eyes.setAttribute("transform", `translate(${dx * 8}, ${dy * 6})`);
+  }
+
+  // Solo se pinta cuando algo cambia: el ratón se mueve o la página hace
+  // scroll (el retrato cambia de sitio respecto al cursor).
+  function schedule() {
+    if (!hasPointer || framePending) return;
+    framePending = true;
+    requestAnimationFrame(render);
+  }
 
   window.addEventListener(
     "mousemove",
     (event) => {
       lastX = event.clientX;
       lastY = event.clientY;
-      hasMoved = true;
+      hasPointer = true;
+      schedule();
     },
     { passive: true }
   );
-
-  function clamp(value) {
-    return Math.max(-1, Math.min(1, value));
-  }
-
-  function tick() {
-    if (hasMoved) {
-      const rect = frame.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const dx = clamp((lastX - centerX) / (window.innerWidth / 2));
-      const dy = clamp((lastY - centerY) / (window.innerHeight / 2));
-
-      // Inclinación 3D sutil de toda la figura.
-      svg.style.transform = `perspective(600px) rotateY(${dx * 10}deg) rotateX(${-dy * 8}deg)`;
-      // Los ojos se desplazan un poco dentro del rostro.
-      if (eyes) eyes.setAttribute("transform", `translate(${dx * 8}, ${dy * 6})`);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  requestAnimationFrame(tick);
+  window.addEventListener("scroll", schedule, { passive: true });
 })();
