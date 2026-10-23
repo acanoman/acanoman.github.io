@@ -12,6 +12,8 @@
   --color-text-muted: #8c9b8d;
   --color-header-overlay: rgb(10 14 10 / 94%);
   --color-shadow: rgb(0 0 0 / 22%);
+  --color-portrait-glow: #16271a;
+  --color-scan: rgb(143 189 115 / 16%);
 
   --font-body: "Space Grotesk", "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", Consolas, monospace;

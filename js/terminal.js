@@ -324,12 +324,10 @@
   const floatingInput = document.getElementById("terminal-input");
   const toggleBtn = document.getElementById("terminal-toggle");
   const closeBtn = document.getElementById("terminal-close");
-  const heroHint = document.getElementById("hero-terminal-hint");
 
   if (!config.ENABLE_TERMINAL) {
     if (toggleBtn) toggleBtn.hidden = true;
     if (floatingWindow) floatingWindow.hidden = true;
-    if (heroHint) heroHint.hidden = true;
     return;
   }
 
