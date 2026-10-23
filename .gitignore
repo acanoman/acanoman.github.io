@@ -1,3 +1,7 @@
 _site/
 .sass-cache/
 .jekyll-metadata
+
+# Material privado que me pasa Álvaro (fotos, apuntes originales).
+# No se sube a GitHub; Jekyll tampoco lo publica (empieza por _).
+_entrada/
