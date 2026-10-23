@@ -1,0 +1,49 @@
+/* Capa de efectos visuales: mira, scanlines, HUD, glitch, boot screen. */
+/* Todo lo de aquí debe ir en capas pointer-events: none y nunca tapar el contenido. */
+
+/* --- Crosshair (mira con coordenadas X/Y) --- */
+
+.crosshair-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.crosshair-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--color-accent);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+.crosshair-line-v {
+  width: 1px;
+  height: 100%;
+}
+
+.crosshair-line-h {
+  width: 100%;
+  height: 1px;
+}
+
+.crosshair-coords {
+  position: fixed;
+  bottom: var(--space-2);
+  right: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--color-accent-strong);
+  background: var(--color-header-overlay);
+  border: 1px solid var(--color-border);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-small);
+}
+
+/* Mientras la mira está activa, se oculta el cursor nativo. */
+body.crosshair-active {
+  cursor: none;
+}
