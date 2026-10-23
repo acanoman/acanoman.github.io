@@ -25,14 +25,16 @@
       vUV = aUV;
       vec2 p = vec2(aUV.x * 2.0 - 1.0, 1.0 - aUV.y * 2.0);
       vec2 follow = clamp(uHead, vec2(-1.3), vec2(1.3));
-      float angle = -follow.x * 0.026;
+      float angle = -follow.x * 0.034;
       mat2 rotation = mat2(cos(angle), sin(angle), -sin(angle), cos(angle));
-      vec2 pivot = vec2(0.0, -0.28);
+      // Pivote en la base del cuello: la cabeza gira desde ahí, no se desliza.
+      vec2 pivot = vec2(0.0, -0.40);
       vec2 rigid = rotation * (p - pivot) + pivot;
-      rigid += vec2(follow.x * 0.018, -follow.y * 0.014);
-      // Toda la cara, incluido el mentón, recibe EXACTAMENTE la misma
-      // rotación y traslación. Solo se interpola por debajo de la barba.
-      float neckBlend = 1.0 - smoothstep(0.64, 0.78, aUV.y);
+      // Traslación lateral mínima: el movimiento lo da el giro sobre el cuello.
+      rigid += vec2(follow.x * 0.009, -follow.y * 0.012);
+      // La cara entera (hasta el cuello) gira; el pecho y los hombros, desde
+      // 0.74 de altura, quedan completamente fijos. La transición va en el cuello.
+      float neckBlend = 1.0 - smoothstep(0.62, 0.74, aUV.y);
       vec2 q = mix(p, rigid, neckBlend);
       q.y += uBreath * neckBlend;
       gl_Position = vec4(q * 0.955, 0.0, 1.0);
