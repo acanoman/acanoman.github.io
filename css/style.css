@@ -240,14 +240,25 @@ h3 {
   gap: var(--space-3);
 }
 
+/* Marco HUD con esquinas cortadas (sección 2 de CLAUDE.md). El borde no puede
+   ser un `border` normal porque no sigue el `clip-path`: se dibuja con
+   `filter: drop-shadow` apilado en las 4 direcciones, que sí recorta junto
+   con la forma. */
 .info-card,
 .post-card {
+  position: relative;
   min-height: 100%;
   padding: var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-medium);
   background: var(--color-surface);
-  box-shadow: var(--shadow-panel);
+  clip-path: polygon(
+    14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px
+  );
+  filter:
+    drop-shadow(0 1.1rem 2.2rem var(--color-shadow))
+    drop-shadow(1px 0 0 var(--color-border))
+    drop-shadow(-1px 0 0 var(--color-border))
+    drop-shadow(0 1px 0 var(--color-border))
+    drop-shadow(0 -1px 0 var(--color-border));
 }
 
 .info-card h3,
@@ -305,9 +316,9 @@ h3 {
   min-height: 10rem;
   flex-direction: column;
   justify-content: center;
-  border-style: dashed;
   background: transparent;
-  box-shadow: none;
+  border: 1px dashed var(--color-border);
+  filter: none;
 }
 
 .placeholder-card .status-label {

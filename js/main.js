@@ -1,11 +1,11 @@
 // Flags de activación de efectos (sección 7 de CLAUDE.md).
 // Cada efecto respeta su flag Y prefers-reduced-motion, pase lo que pase aquí.
 const CONFIG = {
-  ENABLE_BOOT_SCREEN: false,
+  ENABLE_BOOT_SCREEN: true,
   ENABLE_CROSSHAIR: true, // mira + coordenadas X/Y
   ENABLE_TERMINAL: true,
-  ENABLE_SCANLINES: false,
-  ENABLE_GLITCH: false,
+  ENABLE_SCANLINES: true,
+  ENABLE_GLITCH: true,
   ENABLE_FACE_TRACKER: false, // se activa cuando haya foto real
   ENABLE_PARTICLES: false,
 };
