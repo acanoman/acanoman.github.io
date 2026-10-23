@@ -46,8 +46,25 @@ layout: compress
   </div>
 </footer>
 
+<button id="terminal-toggle" class="terminal-toggle" type="button" aria-expanded="false" aria-controls="terminal-window" title="Abrir terminal (tecla `)">
+  <span aria-hidden="true">&gt;_</span> Terminal
+</button>
+
+<div id="terminal-window" class="terminal-window" role="dialog" aria-label="Terminal de navegación" hidden>
+  <div class="terminal-header">
+    <span class="terminal-title">visitor@acano: ~</span>
+    <button id="terminal-close" class="terminal-close" type="button" aria-label="Cerrar terminal">✕</button>
+  </div>
+  <div id="terminal-output" class="terminal-output" role="log" aria-live="polite"></div>
+  <div class="terminal-input-row">
+    <span class="terminal-prompt" aria-hidden="true">visitor@acano:~$</span>
+    <input id="terminal-input" class="terminal-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Escribe un comando y pulsa Enter">
+  </div>
+</div>
+
 {% include analytics.html %}
 <script src="{{ site.baseurl }}/js/main.js" defer></script>
 <script src="{{ site.baseurl }}/js/crosshair.js" defer></script>
+<script src="{{ site.baseurl }}/js/terminal.js" defer></script>
 </body>
 </html>

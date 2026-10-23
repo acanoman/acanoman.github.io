@@ -3,7 +3,7 @@
 const CONFIG = {
   ENABLE_BOOT_SCREEN: false,
   ENABLE_CROSSHAIR: true, // mira + coordenadas X/Y
-  ENABLE_TERMINAL: false,
+  ENABLE_TERMINAL: true,
   ENABLE_SCANLINES: false,
   ENABLE_GLITCH: false,
   ENABLE_FACE_TRACKER: false, // se activa cuando haya foto real

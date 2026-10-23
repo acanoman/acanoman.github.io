@@ -47,3 +47,14 @@
 body.crosshair-active {
   cursor: none;
 }
+
+/* Con la terminal abierta hace falta el cursor normal para poder
+   seleccionar texto y ver el punto de inserción del input. */
+body.crosshair-active.terminal-open {
+  cursor: auto;
+}
+
+body.terminal-open .crosshair-layer {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}

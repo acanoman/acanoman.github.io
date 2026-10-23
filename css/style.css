@@ -458,3 +458,168 @@ code {
     transform: none;
   }
 }
+
+/* --- Terminal simulada (sección 5 de CLAUDE.md) --- */
+
+.terminal-toggle {
+  position: fixed;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-header-overlay);
+  backdrop-filter: blur(10px);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.terminal-toggle span {
+  color: var(--color-accent);
+}
+
+.terminal-toggle:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-strong);
+}
+
+.terminal-window {
+  position: fixed;
+  z-index: 1001;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  display: flex;
+  width: min(34rem, calc(100vw - 2 * var(--space-3)));
+  height: min(26rem, calc(100vh - 2 * var(--space-3)));
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-panel);
+}
+
+.terminal-window[hidden] {
+  display: none;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-raised);
+}
+
+.terminal-title {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.terminal-close {
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.terminal-close:hover {
+  color: var(--color-amber);
+}
+
+.terminal-output {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-3);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.terminal-line {
+  margin-bottom: 0.25em;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.terminal-line-amber {
+  color: var(--color-amber);
+}
+
+.terminal-line-error {
+  color: #ff6b6b;
+}
+
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.terminal-prompt {
+  flex-shrink: 0;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.terminal-input {
+  flex: 1;
+  border: none;
+  background: none;
+  color: var(--color-text);
+  caret-color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  outline: none;
+}
+
+/* Broma del easter egg `sudo rm -rf /`: sacudida corta e independiente del
+   efecto de glitch global (ese llega en la Fase 3). */
+.terminal-window.terminal-shake {
+  animation: terminal-shake 320ms ease;
+}
+
+@keyframes terminal-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-6px, 2px); }
+  40% { transform: translate(5px, -2px); }
+  60% { transform: translate(-4px, 1px); }
+  80% { transform: translate(3px, -1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-window.terminal-shake {
+    animation: none;
+  }
+}
+
+@media (max-width: 36rem) {
+  .terminal-window {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .terminal-toggle {
+    bottom: var(--space-2);
+    left: var(--space-2);
+  }
+}

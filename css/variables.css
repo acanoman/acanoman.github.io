@@ -31,3 +31,9 @@
   --radius-medium: 0.6rem;
   --shadow-panel: 0 1.5rem 4rem var(--color-shadow);
 }
+
+/* Paleta alternativa activable con el comando "theme" de la terminal. */
+.theme-amber {
+  --color-accent: #e1b45e;
+  --color-accent-strong: #f4cf8a;
+}
