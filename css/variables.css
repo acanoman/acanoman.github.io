@@ -1,0 +1,33 @@
+:root {
+  color-scheme: dark;
+
+  --color-background: #0a0e0a;
+  --color-surface: #101710;
+  --color-surface-raised: #151e16;
+  --color-border: #29372b;
+  --color-accent: #8fbd73;
+  --color-accent-strong: #b4e38f;
+  --color-amber: #e1b45e;
+  --color-text: #c8d6c8;
+  --color-text-muted: #8c9b8d;
+  --color-header-overlay: rgb(10 14 10 / 94%);
+  --color-shadow: rgb(0 0 0 / 22%);
+
+  --font-body: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", Consolas, monospace;
+
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4.5rem;
+  --space-8: 6rem;
+
+  --content-width: 70rem;
+  --header-height: 5rem;
+  --radius-small: 0.25rem;
+  --radius-medium: 0.6rem;
+  --shadow-panel: 0 1.5rem 4rem var(--color-shadow);
+}
