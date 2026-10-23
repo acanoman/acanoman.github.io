@@ -7,25 +7,14 @@ layout: default
 <section class="hero reveal" id="top" aria-labelledby="hero-title">
     <div class="hero-grid">
         <div class="hero-portrait">
-            <!-- Retrato encapuchado. Placeholder (silueta SVG) hasta la foto real (Fase 5).
-                 El face-tracker mueve los ojos e inclina la figura hacia el cursor. -->
+            <!-- Avatar interactivo: sigue el cursor con la cabeza y los ojos (efecto 2.5D WebGL).
+                 El <img> interior es el respaldo si el navegador no carga el componente. -->
             <div class="portrait-shell">
-            <div class="portrait-frame" id="face-tracker" data-face-mode="placeholder">
-                <svg class="portrait-svg" viewBox="0 0 200 240" role="img" aria-label="Retrato de Álvaro Cano con capucha, estilo hacker">
-                    <!-- Capucha y hombros: se alarga por debajo del viewBox para que,
-                         al inclinarse, el marco (overflow hidden) recorte en recto. -->
-                    <path class="portrait-hood" d="M18 290 L18 240 Q16 150 58 118 Q34 58 100 36 Q166 58 142 118 Q184 150 182 240 L182 290 Z"
-                          stroke-width="1.5"/>
-                    <!-- Hueco de la capucha -->
-                    <ellipse cx="100" cy="112" rx="44" ry="54" fill="#070b07"/>
-                    <!-- Sombra del rostro -->
-                    <ellipse cx="100" cy="122" rx="31" ry="41" fill="#0c130c"/>
-                    <!-- Ojos (los mueve el face-tracker) -->
-                    <g id="portrait-eyes">
-                        <circle cx="88" cy="116" r="4.2"/>
-                        <circle cx="112" cy="116" r="4.2"/>
-                    </g>
-                </svg>
+            <div class="portrait-frame" id="face-tracker">
+                <alvaro-avatar id="avatar" src="{{ site.baseurl }}/avatar/assets/alvaro.png" strength="1"
+                               label="Avatar animado de Álvaro Cano. Sigue el cursor. Usa las flechas para mover la mirada e Inicio para centrar.">
+                    <img src="{{ site.baseurl }}/avatar/assets/alvaro.png" alt="Retrato de Álvaro Cano Mantero" width="400" height="400">
+                </alvaro-avatar>
                 <span class="portrait-hud portrait-hud-tl">SUBJECT</span>
                 <span class="portrait-hud portrait-hud-br">A. CANO</span>
             </div>

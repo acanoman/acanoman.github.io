@@ -735,31 +735,25 @@ code {
 .portrait-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1;
   overflow: hidden;
-  /* El fondo vive en el marco, no en el SVG: así al inclinar la figura
-     no asoman bordes torcidos. */
-  background: radial-gradient(circle at 50% 38%, var(--color-portrait-glow), var(--color-background) 70%);
+  /* Fondo con brillo verde: el avatar es transparente y lo adopta. */
+  background: radial-gradient(circle at 50% 38%, var(--color-portrait-glow), var(--color-background) 72%);
   clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
 }
 
-.portrait-svg {
+/* Avatar interactivo (web component) y su imagen de respaldo. */
+.portrait-frame alvaro-avatar,
+.portrait-frame > img {
+  display: block;
   width: 100%;
   height: 100%;
-  overflow: visible;
-  transition: transform 140ms ease;
-  transform-style: preserve-3d;
+  object-fit: contain;
 }
 
-.portrait-hood {
-  fill: var(--color-surface-raised);
-  stroke: var(--color-accent);
-}
-
-#portrait-eyes {
-  fill: var(--color-accent-strong);
-  filter: drop-shadow(0 0 3px var(--color-accent)) drop-shadow(0 0 7px var(--color-accent));
-  transition: transform 140ms ease;
+/* --avatar-focus: color del foco de teclado dentro del shadow DOM del avatar. */
+.portrait-frame alvaro-avatar {
+  --avatar-focus: var(--color-accent-strong);
 }
 
 /* Línea de escaneo que recorre el retrato de vez en cuando. */
@@ -852,7 +846,9 @@ code {
 
 @media (max-width: 52rem) {
   .hero-grid {
-    grid-template-columns: 1fr;
+    /* minmax(0, 1fr) deja que la columna se encoja: sin esto, el texto largo
+       del rol y la terminal desbordan y aparece scroll horizontal. */
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-5);
     justify-items: center;
     text-align: center;
@@ -860,17 +856,27 @@ code {
 
   .hero-portrait {
     order: -1;
+    width: 100%;
   }
 
   .portrait-shell {
-    width: min(55%, 13rem);
+    width: min(72%, 17rem);
+  }
+
+  .hero-console {
+    width: 100%;
   }
 
   .hero-console h1 {
     max-width: none;
   }
 
+  .hero-role {
+    overflow-wrap: anywhere;
+  }
+
   .hero-terminal {
+    width: 100%;
     text-align: left;
   }
 
