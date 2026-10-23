@@ -1,13 +1,113 @@
 ---
-title: Welcome
+title: Inicio
+description: Portfolio de Álvaro Cano Mantero, Cybersecurity Engineer orientado a seguridad ofensiva.
 layout: default
 ---
-<div class="post-list">
-    {% for post in site.posts %}
-    
-        <a class="post-title" href="{{site.baseurl}}{{post.url}}"><h2>{{ post.title }}</h2></a>
-        <p class="date">{{ post.date | date: "%b %-d, %Y" }}</p>
-        <p>{{post.excerpt | strip_html}}</p>
-    
-    {% endfor %}
-</div>
+
+<section class="hero reveal" id="top" aria-labelledby="hero-title">
+    <p class="eyebrow">Portfolio · Seguridad ofensiva</p>
+    <h1 id="hero-title" class="glitch-text" data-text="Álvaro Cano">Álvaro <span>Cano</span></h1>
+    <p class="hero-role">Cybersecurity Engineer · Red Team · Pentesting</p>
+    <p class="hero-statement">Romper las cosas para entender cómo funcionan.</p>
+    <div class="hero-meta" aria-label="Perfil profesional">
+        <span>OSCP+ · eJPTv2 · CJCA</span>
+        <span>8 años en IT Security &amp; Cloud</span>
+        <span>Madrid, España</span>
+    </div>
+    <div class="hero-actions">
+        <a class="button-link" href="#about">Explorar perfil <span aria-hidden="true">↓</span></a>
+        <a class="button-link button-link-secondary" href="#contact">Contacto</a>
+    </div>
+    <p class="hero-terminal-hint" id="hero-terminal-hint">
+        <span aria-hidden="true">&gt;_</span> ¿Prefieres explorar por comandos? Pulsa <kbd>`</kbd> o el botón "Terminal" de abajo y escribe <code>help</code>.
+    </p>
+</section>
+
+<section class="content-section reveal" id="about" aria-labelledby="about-title">
+    <div class="section-heading">
+        <span class="section-index">01 /</span>
+        <h2 id="about-title">Sobre mí</h2>
+    </div>
+    <p class="section-copy">Soy Álvaro Cano Mantero, Cybersecurity Engineer con ocho años de experiencia en IT Security &amp; Cloud. Me centro en seguridad ofensiva: comprender cómo fallan los sistemas para poder protegerlos mejor.</p>
+    <p class="section-copy">Trabajo especialmente con Active Directory, técnicas de pivoting y seguridad cloud en AWS. Mi base también incluye operaciones de seguridad y la protección de infraestructuras.</p>
+</section>
+
+<section class="content-section reveal" id="certifications" aria-labelledby="certifications-title">
+    <div class="section-heading">
+        <span class="section-index">02 /</span>
+        <h2 id="certifications-title">Certificaciones</h2>
+    </div>
+    <div class="card-grid">
+        <article class="info-card">
+            <span class="card-label">Seguridad ofensiva</span>
+            <h3>OSCP+</h3>
+            <p>Offensive Security Certified Professional.</p>
+        </article>
+        <article class="info-card">
+            <span class="card-label">Pentesting</span>
+            <h3>eJPTv2</h3>
+            <p>Junior Penetration Tester.</p>
+        </article>
+        <article class="info-card">
+            <span class="card-label">Ciberseguridad</span>
+            <h3>CJCA</h3>
+            <p>Certificación profesional.</p>
+        </article>
+    </div>
+</section>
+
+<section class="content-section reveal" id="arsenal" aria-labelledby="arsenal-title">
+    <div class="section-heading">
+        <span class="section-index">03 /</span>
+        <h2 id="arsenal-title">Arsenal</h2>
+    </div>
+    <p class="section-copy">Áreas de trabajo y especialización.</p>
+    <ul class="skill-list">
+        <li>Active Directory</li>
+        <li>Kerberoasting</li>
+        <li>ADCS</li>
+        <li>Abuso de ACLs</li>
+        <li>NTLM relay</li>
+        <li>Pivoting</li>
+        <li>Seguridad cloud</li>
+        <li>AWS</li>
+    </ul>
+</section>
+
+<section class="content-section reveal" id="projects" aria-labelledby="projects-title">
+    <div class="section-heading">
+        <span class="section-index">04 /</span>
+        <h2 id="projects-title">Proyectos</h2>
+    </div>
+    <article class="info-card placeholder-card">
+        <span class="status-label">En preparación</span>
+        <h3>Próximamente</h3>
+        <p>Esta sección se completará con los proyectos que comparta Álvaro.</p>
+    </article>
+</section>
+
+<section class="content-section reveal" id="notes" aria-labelledby="notes-title">
+    <div class="section-heading">
+        <span class="section-index">05 /</span>
+        <h2 id="notes-title">Apuntes</h2>
+    </div>
+    <p class="section-copy">Notas técnicas, metodología y documentación sobre laboratorios y ciberseguridad. Las publicaciones existentes se mantienen accesibles aquí.</p>
+    <ul class="post-list">
+        {% for post in site.posts limit: 4 %}
+        <li class="post-card">
+            <a href="{{ site.baseurl }}{{ post.url }}"><h3>{{ post.title }}</h3></a>
+            <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d.%m.%Y" }}</time>
+            <p>{{ post.excerpt | strip_html | truncate: 150 }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <p class="section-copy"><a href="{{ site.baseurl }}/apuntes/">Ver todos los apuntes →</a></p>
+</section>
+
+<section class="content-section reveal" id="contact" aria-labelledby="contact-title">
+    <div class="section-heading">
+        <span class="section-index">06 /</span>
+        <h2 id="contact-title">Contacto</h2>
+    </div>
+    <p class="section-copy">Los datos de contacto se añadirán cuando Álvaro decida cuáles publicar.</p>
+</section>

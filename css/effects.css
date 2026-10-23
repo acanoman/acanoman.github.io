@@ -1,0 +1,192 @@
+/* Capa de efectos visuales: mira, scanlines, HUD, glitch, boot screen. */
+/* Todo lo de aquí debe ir en capas pointer-events: none y nunca tapar el contenido. */
+
+/* --- Crosshair (mira con coordenadas X/Y) --- */
+
+.crosshair-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.crosshair-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--color-accent);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+.crosshair-line-v {
+  width: 1px;
+  height: 100%;
+}
+
+.crosshair-line-h {
+  width: 100%;
+  height: 1px;
+}
+
+.crosshair-coords {
+  position: fixed;
+  bottom: var(--space-2);
+  right: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--color-accent-strong);
+  background: var(--color-header-overlay);
+  border: 1px solid var(--color-border);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-small);
+}
+
+/* Mientras la mira está activa, se oculta el cursor nativo. */
+body.crosshair-active {
+  cursor: none;
+}
+
+/* Con la terminal abierta hace falta el cursor normal para poder
+   seleccionar texto y ver el punto de inserción del input. */
+body.crosshair-active.terminal-open {
+  cursor: auto;
+}
+
+body.terminal-open .crosshair-layer {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+/* --- Scanlines + ruido muy sutil --- */
+/* Capa estática (sin JS de animación): líneas horizontales repetidas +
+   textura de ruido generada con un SVG inline, todo en pointer-events: none. */
+
+body.scanlines-active::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.18) 0px,
+      rgba(0, 0, 0, 0.18) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: auto, 140px 140px;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+/* --- Micro-glitch ocasional en títulos --- */
+/* Clase reutilizable: cualquier título con class="glitch-text" y un
+   data-text con el MISMO contenido puede recibir el efecto. El JS
+   (js/glitch.js) añade y quita .is-glitching cada pocos segundos. */
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text.is-glitching {
+  animation: glitch-shift 260ms steps(2, end);
+}
+
+.glitch-text.is-glitching::before,
+.glitch-text.is-glitching::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  background: var(--color-background);
+}
+
+.glitch-text.is-glitching::before {
+  color: #ff3b6b;
+  clip-path: polygon(0 10%, 100% 10%, 100% 35%, 0 35%);
+  animation: glitch-slice-a 260ms steps(2, end);
+}
+
+.glitch-text.is-glitching::after {
+  color: #38e8ff;
+  clip-path: polygon(0 55%, 100% 55%, 100% 80%, 0 80%);
+  animation: glitch-slice-b 260ms steps(2, end);
+}
+
+@keyframes glitch-shift {
+  0%, 100% { transform: translate(0, 0); }
+  30% { transform: translate(-1px, 1px); }
+  60% { transform: translate(1px, -1px); }
+}
+
+@keyframes glitch-slice-a {
+  0%, 100% { clip-path: polygon(0 10%, 100% 10%, 100% 35%, 0 35%); transform: translate(-2px, -1px); }
+  50% { clip-path: polygon(0 45%, 100% 45%, 100% 65%, 0 65%); transform: translate(2px, 1px); }
+}
+
+@keyframes glitch-slice-b {
+  0%, 100% { clip-path: polygon(0 55%, 100% 55%, 100% 80%, 0 80%); transform: translate(2px, 1px); }
+  50% { clip-path: polygon(0 20%, 100% 20%, 100% 45%, 0 45%); transform: translate(-2px, -1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch-text.is-glitching,
+  .glitch-text.is-glitching::before,
+  .glitch-text.is-glitching::after {
+    animation: none;
+  }
+}
+
+/* --- Boot screen inicial --- */
+/* Todo el DOM lo crea js/boot.js; aquí solo el aspecto visual. */
+
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background: var(--color-background);
+  opacity: 1;
+  transition: opacity 200ms ease;
+}
+
+.boot-screen.is-leaving {
+  opacity: 0;
+}
+
+.boot-text {
+  margin: 0;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.boot-text div {
+  min-height: 1.6em;
+}
+
+.boot-skip {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+/* Mientras arranca, se evita el scroll de fondo. */
+body.boot-active {
+  overflow: hidden;
+}

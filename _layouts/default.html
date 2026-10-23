@@ -2,29 +2,72 @@
 layout: compress
 ---
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ page.title }} - {{site.title}}</title>
-  <link rel="stylesheet" href="{{site.baseurl}}/css/main.css">
+  <meta name="theme-color" content="#0a0e0a">
+  <meta name="description" content="{{ page.description | default: 'Portfolio de Álvaro Cano, Cybersecurity Engineer especializado en seguridad ofensiva.' }}">
+  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ site.baseurl }}/css/variables.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}/css/reset.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}/css/style.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}/css/effects.css">
 </head>
 
 <body>
-<header>
-    <nav>
-        <ul>
-            <li><a href="{{site.baseurl}}/">Home</a></li>
-            <li><a href="{{site.baseurl}}/about">About</a></li>
-            <li><a href="{{site.baseurl}}/contact">Contact</a></li>
-        </ul>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="{{ site.baseurl }}/" aria-label="{{ site.title }}, inicio"><span class="brand-mark">[</span> ACANO <span class="brand-mark">]</span></a>
+    <nav class="site-nav" aria-label="Navegación principal">
+      <ul>
+        <li><a href="{{ site.baseurl }}/#about">Sobre mí</a></li>
+        <li><a href="{{ site.baseurl }}/#certifications">Certificaciones</a></li>
+        <li><a href="{{ site.baseurl }}/#arsenal">Arsenal</a></li>
+        <li><a href="{{ site.baseurl }}/#projects">Proyectos</a></li>
+        <li><a href="{{ site.baseurl }}/#notes">Apuntes</a></li>
+        <li><a href="{{ site.baseurl }}/#contact">Contacto</a></li>
+      </ul>
     </nav>
-    <a class="title-a" href="{{site.baseurl}}/"><h1 class="title">{{site.title}}</h1></a>
+  </div>
 </header>
-      
-  
+
+<main class="page-shell">
   {{ content }}
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <span>Álvaro Cano Mantero · Madrid, España</span>
+    <a href="{{ site.baseurl }}/#top">Volver arriba ↑</a>
+  </div>
+</footer>
+
+<button id="terminal-toggle" class="terminal-toggle" type="button" aria-expanded="false" aria-controls="terminal-window" title="Abrir terminal (tecla `)">
+  <span aria-hidden="true">&gt;_</span> Terminal
+</button>
+
+<div id="terminal-window" class="terminal-window" role="dialog" aria-label="Terminal de navegación" hidden>
+  <div class="terminal-header">
+    <span class="terminal-title">visitor@acano: ~</span>
+    <button id="terminal-close" class="terminal-close" type="button" aria-label="Cerrar terminal">✕</button>
+  </div>
+  <div id="terminal-output" class="terminal-output" role="log" aria-live="polite"></div>
+  <div class="terminal-input-row">
+    <span class="terminal-prompt" aria-hidden="true">visitor@acano:~$</span>
+    <input id="terminal-input" class="terminal-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="escribe help y pulsa Enter" aria-label="Escribe un comando y pulsa Enter">
+  </div>
+</div>
 
 {% include analytics.html %}
+<script src="{{ site.baseurl }}/js/main.js" defer></script>
+<script src="{{ site.baseurl }}/js/boot.js" defer></script>
+<script src="{{ site.baseurl }}/js/crosshair.js" defer></script>
+<script src="{{ site.baseurl }}/js/terminal.js" defer></script>
+<script src="{{ site.baseurl }}/js/scanlines.js" defer></script>
+<script src="{{ site.baseurl }}/js/glitch.js" defer></script>
 </body>
 </html>

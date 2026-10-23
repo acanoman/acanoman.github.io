@@ -1,0 +1,21 @@
+---
+layout: default
+title: Apuntes
+description: Publicaciones y apuntes técnicos de Álvaro Cano.
+permalink: /apuntes/
+---
+
+<section aria-labelledby="notes-page-title">
+  <p class="eyebrow">Base de conocimiento</p>
+  <h1 class="page-title" id="notes-page-title">Apuntes</h1>
+  <p class="section-copy">Publicaciones y notas técnicas compartidas por Álvaro.</p>
+  <ul class="post-list">
+    {% for post in site.posts %}
+    <li class="post-card">
+      <a href="{{ site.baseurl }}{{ post.url }}"><h2>{{ post.title }}</h2></a>
+      <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d.%m.%Y" }}</time>
+      <p>{{ post.excerpt | strip_html | truncate: 180 }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
