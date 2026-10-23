@@ -522,6 +522,11 @@ code {
   color: var(--color-accent-strong);
 }
 
+/* El display:inline-flex anularía el atributo hidden; lo forzamos. */
+.terminal-toggle[hidden] {
+  display: none;
+}
+
 .terminal-window {
   position: fixed;
   z-index: 1001;
@@ -594,6 +599,14 @@ code {
   color: #ff6b6b;
 }
 
+.terminal-line-accent {
+  color: var(--color-accent-strong);
+}
+
+.terminal-line-muted {
+  color: var(--color-text-muted);
+}
+
 .terminal-input-row {
   display: flex;
   align-items: center;
@@ -624,9 +637,9 @@ code {
   color: var(--color-text-muted);
 }
 
-/* Broma del easter egg `sudo rm -rf /`: sacudida corta e independiente del
-   efecto de glitch global (ese llega en la Fase 3). */
-.terminal-window.terminal-shake {
+/* Broma del easter egg `sudo rm -rf /`: sacudida corta. Aplica tanto a la
+   ventana flotante como a la terminal embebida del hero. */
+.terminal-shake {
   animation: terminal-shake 320ms ease;
 }
 
@@ -639,7 +652,7 @@ code {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .terminal-window.terminal-shake {
+  .terminal-shake {
     animation: none;
   }
 }
@@ -657,5 +670,142 @@ code {
   .terminal-toggle {
     bottom: var(--space-2);
     left: var(--space-2);
+  }
+}
+
+/* --- Hero dividido: retrato encapuchado + terminal integrada (Opción A) --- */
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: var(--space-6);
+  align-items: center;
+  width: 100%;
+}
+
+.hero-portrait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Marco HUD del retrato: esquinas cortadas + borde de acento con drop-shadow
+   (un border normal no seguiría el clip-path). */
+.portrait-frame {
+  position: relative;
+  width: min(100%, 20rem);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--color-surface);
+  clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+  filter:
+    drop-shadow(0 1.1rem 2.2rem var(--color-shadow))
+    drop-shadow(1px 0 0 var(--color-accent))
+    drop-shadow(-1px 0 0 var(--color-accent))
+    drop-shadow(0 1px 0 var(--color-accent))
+    drop-shadow(0 -1px 0 var(--color-accent));
+}
+
+.portrait-svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 140ms ease;
+  transform-style: preserve-3d;
+}
+
+.portrait-hood {
+  fill: var(--color-surface-raised);
+  stroke: var(--color-accent);
+}
+
+#portrait-eyes {
+  fill: var(--color-accent-strong);
+  transition: transform 140ms ease;
+}
+
+.portrait-hud {
+  position: absolute;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  opacity: 0.85;
+}
+
+.portrait-hud-tl { top: 8px; left: 10px; }
+.portrait-hud-br { bottom: 8px; right: 10px; }
+
+.portrait-caption {
+  color: var(--color-amber);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+}
+
+.hero-console {
+  min-width: 0;
+}
+
+.hero-console .eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.hero-console h1 {
+  max-width: 13ch;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  letter-spacing: -0.06em;
+}
+
+.hero-console h1 span {
+  color: var(--color-accent);
+}
+
+.hero-terminal {
+  display: flex;
+  flex-direction: column;
+  height: 15rem;
+  margin-top: var(--space-4);
+  overflow: hidden;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-panel);
+}
+
+.terminal-dots {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.terminal-dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-border);
+}
+
+@media (max-width: 52rem) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    justify-items: center;
+    text-align: center;
+  }
+
+  .hero-portrait {
+    order: -1;
+  }
+
+  .portrait-frame {
+    width: min(55%, 13rem);
+  }
+
+  .hero-console h1 {
+    max-width: none;
+  }
+
+  .hero-terminal {
+    text-align: left;
   }
 }

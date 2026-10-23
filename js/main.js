@@ -6,7 +6,7 @@ const CONFIG = {
   ENABLE_TERMINAL: true,
   ENABLE_SCANLINES: true,
   ENABLE_GLITCH: true,
-  ENABLE_FACE_TRACKER: false, // se activa cuando haya foto real
+  ENABLE_FACE_TRACKER: true, // placeholder (silueta): inclina y mueve los ojos. Foto real en Fase 5
   ENABLE_PARTICLES: false,
 };
 window.CONFIG = CONFIG;

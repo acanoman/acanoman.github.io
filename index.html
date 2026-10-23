@@ -5,22 +5,64 @@ layout: default
 ---
 
 <section class="hero reveal" id="top" aria-labelledby="hero-title">
-    <p class="eyebrow">Portfolio · Seguridad ofensiva</p>
-    <h1 id="hero-title" class="glitch-text" data-text="Álvaro Cano">Álvaro <span>Cano</span></h1>
-    <p class="hero-role">Cybersecurity Engineer · Red Team · Pentesting</p>
-    <p class="hero-statement">Romper las cosas para entender cómo funcionan.</p>
-    <div class="hero-meta" aria-label="Perfil profesional">
-        <span>OSCP+ · eJPTv2 · CJCA</span>
-        <span>8 años en IT Security &amp; Cloud</span>
-        <span>Madrid, España</span>
+    <div class="hero-grid">
+        <div class="hero-portrait">
+            <!-- Retrato encapuchado. Placeholder (silueta SVG) hasta la foto real (Fase 5).
+                 El face-tracker mueve los ojos e inclina la figura hacia el cursor. -->
+            <div class="portrait-frame" id="face-tracker" data-face-mode="placeholder">
+                <svg class="portrait-svg" viewBox="0 0 200 240" role="img" aria-label="Retrato de Álvaro Cano con capucha, estilo hacker">
+                    <defs>
+                        <radialGradient id="portrait-glow" cx="50%" cy="38%" r="60%">
+                            <stop offset="0%" stop-color="#16271a"/>
+                            <stop offset="100%" stop-color="#0a0e0a"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="200" height="240" fill="url(#portrait-glow)"/>
+                    <!-- Capucha y hombros -->
+                    <path class="portrait-hood" d="M18 240 Q16 150 58 118 Q34 58 100 36 Q166 58 142 118 Q184 150 182 240 Z"
+                          stroke-width="1.5"/>
+                    <!-- Hueco de la capucha -->
+                    <ellipse cx="100" cy="112" rx="44" ry="54" fill="#070b07"/>
+                    <!-- Sombra del rostro -->
+                    <ellipse cx="100" cy="122" rx="31" ry="41" fill="#0c130c"/>
+                    <!-- Ojos (los mueve el face-tracker) -->
+                    <g id="portrait-eyes">
+                        <circle cx="88" cy="116" r="4.2"/>
+                        <circle cx="112" cy="116" r="4.2"/>
+                    </g>
+                </svg>
+                <span class="portrait-hud portrait-hud-tl">SUBJECT</span>
+                <span class="portrait-hud portrait-hud-br">A. CANO</span>
+            </div>
+            <p class="portrait-caption"><span aria-hidden="true">[</span> TARGET: ACQUIRED <span aria-hidden="true">]</span></p>
+        </div>
+
+        <div class="hero-console">
+            <p class="eyebrow">Portfolio · Seguridad ofensiva</p>
+            <h1 id="hero-title" class="glitch-text" data-text="Álvaro Cano">Álvaro <span>Cano</span></h1>
+            <p class="hero-role">Cybersecurity Engineer · Red Team · Pentesting</p>
+
+            <div class="hero-terminal" aria-label="Terminal de navegación">
+                <div class="terminal-header">
+                    <span class="terminal-title">visitor@acano: ~</span>
+                    <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                </div>
+                <div id="hero-terminal-output" class="terminal-output" role="log"></div>
+                <div class="terminal-input-row">
+                    <span class="terminal-prompt" aria-hidden="true">visitor@acano:~$</span>
+                    <input id="hero-terminal-input" class="terminal-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="escribe help y pulsa Enter" aria-label="Escribe un comando y pulsa Enter">
+                </div>
+            </div>
+
+            <div class="hero-actions">
+                <a class="button-link" href="#about">Explorar perfil <span aria-hidden="true">↓</span></a>
+                <a class="button-link button-link-secondary" href="#contact">Contacto</a>
+            </div>
+            <p class="hero-terminal-hint" id="hero-terminal-hint">
+                <span aria-hidden="true">&gt;_</span> Escribe <code>help</code> en la terminal, o pulsa <kbd>`</kbd> en cualquier momento para enfocarla.
+            </p>
+        </div>
     </div>
-    <div class="hero-actions">
-        <a class="button-link" href="#about">Explorar perfil <span aria-hidden="true">↓</span></a>
-        <a class="button-link button-link-secondary" href="#contact">Contacto</a>
-    </div>
-    <p class="hero-terminal-hint" id="hero-terminal-hint">
-        <span aria-hidden="true">&gt;_</span> ¿Prefieres explorar por comandos? Pulsa <kbd>`</kbd> o el botón "Terminal" de abajo y escribe <code>help</code>.
-    </p>
 </section>
 
 <section class="content-section reveal" id="about" aria-labelledby="about-title">
