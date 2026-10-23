@@ -48,9 +48,10 @@ body.crosshair-active {
   cursor: none;
 }
 
-/* Con la terminal abierta hace falta el cursor normal para poder
-   seleccionar texto y ver el punto de inserción del input. */
-body.crosshair-active.terminal-open {
+/* Con la terminal abierta (flotante) o mientras se escribe en la del hero
+   hace falta el cursor normal para seleccionar texto y ver el caret. */
+body.crosshair-active.terminal-open,
+body.crosshair-active.terminal-typing {
   cursor: auto;
 }
 
