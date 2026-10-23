@@ -12,6 +12,8 @@
   const layer = document.createElement("div");
   layer.className = "crosshair-layer";
   layer.setAttribute("aria-hidden", "true");
+  // Oculta hasta el primer movimiento: si no, las líneas salen en la esquina (0, 0).
+  layer.style.visibility = "hidden";
 
   const lineV = document.createElement("div");
   lineV.className = "crosshair-line crosshair-line-v";
@@ -29,32 +31,32 @@
   document.body.appendChild(layer);
   document.body.classList.add("crosshair-active");
 
-  // El listener solo guarda la última posición; el pintado va en requestAnimationFrame
-  // para no repintar más veces de las que el navegador puede pintar.
-  let lastX = window.innerWidth / 2;
-  let lastY = window.innerHeight / 2;
-  let hasMoved = false;
+  // El listener solo guarda la última posición y pide UN frame si no hay
+  // ninguno pendiente. Con el ratón quieto no se ejecuta nada (ahorra CPU).
+  let lastX = 0;
+  let lastY = 0;
+  let framePending = false;
+
+  function render() {
+    framePending = false;
+    layer.style.visibility = "visible";
+    lineV.style.transform = `translateX(${lastX}px)`;
+    lineH.style.transform = `translateY(${lastY}px)`;
+    coords.textContent = `X: ${Math.round(lastX)} Y: ${Math.round(lastY)}`;
+  }
 
   window.addEventListener(
     "mousemove",
     (event) => {
       lastX = event.clientX;
       lastY = event.clientY;
-      hasMoved = true;
+      if (!framePending) {
+        framePending = true;
+        requestAnimationFrame(render);
+      }
     },
     { passive: true }
   );
-
-  function tick() {
-    if (hasMoved) {
-      lineV.style.transform = `translateX(${lastX}px)`;
-      lineH.style.transform = `translateY(${lastY}px)`;
-      coords.textContent = `X: ${Math.round(lastX)} Y: ${Math.round(lastY)}`;
-    }
-    requestAnimationFrame(tick);
-  }
-
-  requestAnimationFrame(tick);
 
   // Si el ratón sale de la ventana (p. ej. al minimizar), no hace falta limpiar nada más:
   // la capa es pointer-events: none y no interfiere con el resto de la página.

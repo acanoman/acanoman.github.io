@@ -12,7 +12,7 @@ Mi web personal (portfolio de ciberseguridad ofensiva) en **acanoman.github.io**
 
 - Repo GitHub: `https://github.com/acanoman/acanoman.github.io`
 - Web publicada: `https://acanoman.github.io/`
-- Se publica sola por **GitHub Pages** al hacer push a la rama `main` (ver sección 9).
+- Se publica sola por **GitHub Pages** al hacer push a la rama `master` (ver sección 9).
 
 ---
 
@@ -79,6 +79,12 @@ Objetivo: que quede **moderna, oscura, "cyberdefensa", con movimiento**, pero **
 
 > Motivo: GitHub Pages sirve estáticos directamente y así cualquier cambio es instantáneo. Si en el futuro quiero algo más, ya lo valoramos; de momento **no** metas React/Vite/bundlers.
 
+**⚠️ Realidad del repo (corregido el 23/10/2026):** el sitio usa **Jekyll**, que GitHub Pages compila solo al hacer push (no hace falta compilar nada en local). La cabecera, nav, footer, CSS y scripts viven en `_layouts/default.html`; `index.html` y los posts solo aportan su contenido con front matter (`--- layout: default ---`). Consecuencias:
+
+- **NO crear `.nojekyll`**: desactivaría Jekyll y la web saldría sin plantilla ni estilos.
+- Abrir `index.html` con Live Server **no** muestra la web real (no aplica la plantilla). Para verla: publicar en `master`, o instalar Ruby + Jekyll y usar `bundle exec jekyll serve`.
+- Los posts están en `_posts/` y usan `_layouts/post.html`.
+
 Estructura de carpetas objetivo:
 
 ```
@@ -100,7 +106,8 @@ acanoman.github.io/
 ├── assets/
 │   ├── img/                # Imágenes (incluida la cara generada)
 │   └── faces/              # Rejilla de imágenes del face-tracker
-├── .nojekyll               # Para que GitHub Pages no procese con Jekyll
+├── _layouts/               # Plantillas Jekyll (default, post, page)
+├── _posts/                 # Artículos del blog
 └── README.md
 ```
 
@@ -216,19 +223,19 @@ Reglas del flujo:
 - Trabaja en una rama aparte (ver sección 9) hasta que yo diga de publicar.
 - Si vas a instalar/añadir una librería por CDN, dímelo antes y por qué.
 - No borres contenido mío sin avisar.
-- Pruebas: cada fase tiene que poder verse abriendo `index.html` con Live Server.
+- Pruebas: como el sitio usa Jekyll (ver sección 3), cada fase se ve publicándola en `master` (previa confirmación) o con `bundle exec jekyll serve` si hay Jekyll instalado en local.
 
 ---
 
 ## 9. Git y publicación (GitHub Pages)
 
-La web se publica sola al hacer push a `main`. Flujo:
+La web se publica sola al hacer push a `master`. Flujo:
 
-1. Rediseñamos en la rama `rediseno` (o la que acordemos), no directamente en `main`.
+1. Rediseñamos en la rama `rediseno` (o la que acordemos), no directamente en `master`.
 2. (Opcional) copia de seguridad de lo viejo: `git branch web-antigua` antes de borrar.
-3. Cuando el rediseño esté listo y yo dé el OK, lo pasamos a `main`:
+3. Cuando el rediseño esté listo y yo dé el OK, lo pasamos a `master`:
    ```bash
-   git checkout main
+   git checkout master
    git merge rediseno
    git push
    ```
@@ -236,8 +243,8 @@ La web se publica sola al hacer push a `main`. Flujo:
 
 Requisitos para que Pages funcione:
 - El archivo principal debe llamarse `index.html` y estar en la raíz del repo.
-- Debe existir `.nojekyll` en la raíz (así GitHub no procesa el sitio con Jekyll y respeta carpetas con `_` y los estáticos tal cual).
-- Settings → Pages del repo debe apuntar a la rama publicada (`main`) y carpeta `/ (root)`.
+- **No** debe existir `.nojekyll`: el sitio necesita que GitHub lo procese con Jekyll (ver sección 3).
+- Settings → Pages del repo debe apuntar a la rama publicada (`master`) y carpeta `/ (root)`.
 
 Comandos de commit/push que puedes usar:
 ```bash
@@ -246,7 +253,7 @@ git commit -m "mensaje claro en español"
 git push
 ```
 
-> Antes de hacer `push` a `main` o un `merge` a `main`, confírmamelo. En ramas de trabajo puedes commitear con libertad.
+> Antes de hacer `push` a `master` o un `merge` a `master`, confírmamelo. En ramas de trabajo puedes commitear con libertad.
 
 ---
 
@@ -268,7 +275,7 @@ Cuando te pase el HTML de los apuntes:
 - ❌ No publiques ni subas ninguna foto mía sin mi OK explícito.
 - ❌ No copies código/diseño/logos de las webs de referencia. Inspiración sí, copia no.
 - ❌ No metas frameworks ni build step sin acordarlo.
-- ❌ No hagas push/merge a `main` sin confirmarlo conmigo.
+- ❌ No hagas push/merge a `master` sin confirmarlo conmigo.
 - ❌ No sacrifiques legibilidad ni rendimiento por un efecto bonito.
 
 ---

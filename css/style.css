@@ -18,6 +18,28 @@ a:hover {
   color: var(--color-amber);
 }
 
+/* Enlace de salto: oculto hasta que se enfoca con el teclado. */
+.skip-link {
+  position: absolute;
+  z-index: 3000;
+  top: var(--space-2);
+  left: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-accent);
+  color: var(--color-background);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+main:focus {
+  outline: none;
+}
+
 ::selection {
   background: var(--color-accent);
   color: var(--color-background);
@@ -105,26 +127,12 @@ a:hover {
   text-transform: uppercase;
 }
 
-.hero .eyebrow {
-  margin-bottom: var(--space-4);
-}
-
 h1,
 h2,
 h3 {
   color: var(--color-text);
   font-weight: 600;
   line-height: 1.15;
-}
-
-.hero h1 {
-  max-width: 13ch;
-  font-size: clamp(3rem, 9vw, 6.5rem);
-  letter-spacing: -0.065em;
-}
-
-.hero h1 span {
-  color: var(--color-accent);
 }
 
 .hero-role {
@@ -134,27 +142,11 @@ h3 {
   font-size: clamp(0.95rem, 2vw, 1.2rem);
 }
 
-.hero-statement {
-  max-width: 42rem;
-  margin-top: var(--space-5);
-  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
-}
-
-.hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-4);
-  margin-top: var(--space-5);
-  color: var(--color-text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-}
-
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  margin-top: var(--space-6);
+  margin-top: var(--space-5);
 }
 
 .button-link {
@@ -232,12 +224,20 @@ h3 {
   clip-path: polygon(
     14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px
   );
+}
+
+/* Borde HUD de las tarjetas. Va en el CONTENEDOR, no en la tarjeta: el
+   navegador aplica el filter antes que el clip-path, así que en la propia
+   tarjeta el recorte se comería el borde. En el padre, el drop-shadow sigue
+   la silueta ya recortada de cada tarjeta. */
+.card-grid,
+.post-list {
   filter:
-    drop-shadow(0 1.1rem 2.2rem var(--color-shadow))
     drop-shadow(1px 0 0 var(--color-border))
     drop-shadow(-1px 0 0 var(--color-border))
     drop-shadow(0 1px 0 var(--color-border))
-    drop-shadow(0 -1px 0 var(--color-border));
+    drop-shadow(0 -1px 0 var(--color-border))
+    drop-shadow(0 1.1rem 2.2rem var(--color-shadow));
 }
 
 .info-card h3,
@@ -297,7 +297,6 @@ h3 {
   justify-content: center;
   background: transparent;
   border: 1px dashed var(--color-border);
-  filter: none;
 }
 
 .placeholder-card .status-label {
@@ -339,6 +338,11 @@ h3 {
 
 .post-title h2 {
   font-size: 1.25rem;
+}
+
+/* Ancho de lectura cómodo para posts y páginas. */
+.post-content {
+  max-width: 48rem;
 }
 
 .post-content h1,
@@ -643,6 +647,14 @@ code {
   display: none;
 }
 
+/* El input no lleva outline propio: el indicador de foco es la terminal
+   entera, que se ilumina al escribir. */
+.hero-terminal:focus-within,
+.terminal-window:focus-within {
+  border-color: var(--color-accent-strong);
+  box-shadow: var(--shadow-panel), 0 0 0 1px var(--color-accent-strong);
+}
+
 @keyframes terminal-blink {
   50% { opacity: 0; }
 }
@@ -708,21 +720,27 @@ code {
 
 /* Marco HUD del retrato: esquinas cortadas + borde de acento con drop-shadow
    (un border normal no seguiría el clip-path). */
+/* El borde de acento va en el envoltorio: si estuviera en .portrait-frame,
+   su propio clip-path lo recortaría (el filter se aplica antes del recorte). */
+.portrait-shell {
+  width: min(100%, 24rem);
+  filter:
+    drop-shadow(1px 0 0 var(--color-accent))
+    drop-shadow(-1px 0 0 var(--color-accent))
+    drop-shadow(0 1px 0 var(--color-accent))
+    drop-shadow(0 -1px 0 var(--color-accent))
+    drop-shadow(0 1.1rem 2.2rem var(--color-shadow));
+}
+
 .portrait-frame {
   position: relative;
-  width: min(100%, 24rem);
+  width: 100%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
   /* El fondo vive en el marco, no en el SVG: así al inclinar la figura
      no asoman bordes torcidos. */
   background: radial-gradient(circle at 50% 38%, var(--color-portrait-glow), var(--color-background) 70%);
   clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
-  filter:
-    drop-shadow(0 1.1rem 2.2rem var(--color-shadow))
-    drop-shadow(1px 0 0 var(--color-accent))
-    drop-shadow(-1px 0 0 var(--color-accent))
-    drop-shadow(0 1px 0 var(--color-accent))
-    drop-shadow(0 -1px 0 var(--color-accent));
 }
 
 .portrait-svg {
@@ -768,13 +786,16 @@ code {
   }
 }
 
+/* Fondo propio para que la línea de la capucha no cruce el texto. */
 .portrait-hud {
   position: absolute;
+  z-index: 1;
+  padding: 2px 5px;
+  background: var(--color-header-overlay);
   color: var(--color-accent);
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.15em;
-  opacity: 0.85;
 }
 
 .portrait-hud-tl { top: 8px; left: 10px; }
@@ -841,7 +862,7 @@ code {
     order: -1;
   }
 
-  .portrait-frame {
+  .portrait-shell {
     width: min(55%, 13rem);
   }
 
@@ -851,5 +872,26 @@ code {
 
   .hero-terminal {
     text-align: left;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+}
+
+/* Móvil estrecho (hasta 360 px): terminal más compacta y legible. */
+@media (max-width: 36rem) {
+  .hero-terminal {
+    height: 17rem;
+  }
+
+  .hero-terminal .terminal-output,
+  .hero-terminal .terminal-prompt,
+  .hero-terminal .terminal-input {
+    font-size: 0.74rem;
+  }
+
+  .hero-terminal .terminal-output {
+    padding: var(--space-2);
   }
 }

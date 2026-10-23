@@ -19,6 +19,7 @@ layout: compress
 </head>
 
 <body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="{{ site.baseurl }}/" aria-label="{{ site.title }}, inicio"><span class="brand-mark">[</span> ACANO <span class="brand-mark">]</span></a>
@@ -35,7 +36,7 @@ layout: compress
   </div>
 </header>
 
-<main class="page-shell">
+<main class="page-shell" id="contenido" tabindex="-1">
   {{ content }}
 </main>
 

@@ -25,6 +25,7 @@
 
   const pre = document.createElement("pre");
   pre.className = "boot-text";
+  pre.setAttribute("aria-hidden", "true"); // el texto cambia a cada frame: no se lee en voz alta
   overlay.appendChild(pre);
 
   const skipHint = document.createElement("p");
