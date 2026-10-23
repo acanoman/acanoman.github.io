@@ -8,11 +8,13 @@
   const windowEl = document.getElementById("terminal-window");
   const outputEl = document.getElementById("terminal-output");
   const inputEl = document.getElementById("terminal-input");
+  const heroHint = document.getElementById("hero-terminal-hint");
 
   if (!toggleBtn || !windowEl || !outputEl || !inputEl) return;
 
   if (!config.ENABLE_TERMINAL) {
     toggleBtn.hidden = true;
+    if (heroHint) heroHint.hidden = true;
     return;
   }
 
@@ -238,10 +240,11 @@
     toggleBtn.setAttribute("aria-expanded", "true");
     document.body.classList.add("terminal-open");
     if (outputEl.childElementCount === 0) {
-      printLines([
-        "Terminal de acanoman.github.io — escribe 'help' para empezar.",
-        "",
-      ]);
+      // Primer uso: se muestra directamente la ayuda para que quien no conozca
+      // una terminal sepa de inmediato qué puede escribir (no basta con decir "escribe help").
+      printLines(["Terminal de acanoman.github.io. Puedes navegar la web con estos comandos:", ""]);
+      printLines(COMMANDS.help());
+      printLines(["", "Escribe cualquiera de ellos y pulsa Enter. Esc o 'exit' para cerrar."]);
     }
     inputEl.focus();
   }
