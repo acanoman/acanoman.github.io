@@ -7,14 +7,13 @@ layout: default
 <section class="hero reveal" id="top" aria-labelledby="hero-title">
     <div class="hero-grid">
         <div class="hero-portrait">
-            <!-- Avatar interactivo: sigue el cursor con la cabeza y los ojos (efecto 2.5D WebGL).
-                 El <img> interior es el respaldo si el navegador no carga el componente. -->
+            <!-- Retrato 3D (js/face-tracker.js, Three.js): la cabeza gira hacia el cursor.
+                 La <img> es el respaldo si WebGL no está disponible o el flag está apagado. -->
             <div class="portrait-shell">
             <div class="portrait-frame" id="face-tracker">
-                <alvaro-avatar id="avatar" src="{{ site.baseurl }}/avatar/assets/alvaro.png" strength="1"
-                               label="Avatar animado de Álvaro Cano. Sigue el cursor. Usa las flechas para mover la mirada e Inicio para centrar.">
-                    <img src="{{ site.baseurl }}/avatar/assets/alvaro.png" alt="Retrato de Álvaro Cano Mantero" width="400" height="400">
-                </alvaro-avatar>
+                <div class="avatar-stage" data-avatar-3d data-src="{{ site.baseurl }}/avatar/assets/alvaro.png">
+                    <img class="avatar-fallback" src="{{ site.baseurl }}/avatar/assets/alvaro.png" alt="Retrato de Álvaro Cano Mantero" width="400" height="400">
+                </div>
                 <span class="portrait-hud portrait-hud-tl">SUBJECT</span>
                 <span class="portrait-hud portrait-hud-br">A. CANO</span>
             </div>
