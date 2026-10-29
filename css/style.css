@@ -742,18 +742,30 @@ code {
   clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
 }
 
-/* Avatar interactivo (web component) y su imagen de respaldo. */
-.portrait-frame alvaro-avatar,
-.portrait-frame > img {
+/* Escenario del retrato 3D. La imagen de respaldo ocupa el mismo hueco y
+   ocupa el mismo encuadre que el lienzo (0.96 = margen que deja el shader). */
+.avatar-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-fallback,
+.avatar-canvas {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.avatar-fallback {
+  padding: 2%;
   object-fit: contain;
 }
 
-/* --avatar-focus: color del foco de teclado dentro del shadow DOM del avatar. */
-.portrait-frame alvaro-avatar {
-  --avatar-focus: var(--color-accent-strong);
+.avatar-stage.is-3d .avatar-fallback {
+  display: none;
 }
 
 /* Línea de escaneo que recorre el retrato de vez en cuando. */

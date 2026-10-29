@@ -16,6 +16,9 @@ layout: compress
   <link rel="stylesheet" href="{{ site.baseurl }}/css/reset.css">
   <link rel="stylesheet" href="{{ site.baseurl }}/css/style.css">
   <link rel="stylesheet" href="{{ site.baseurl }}/css/effects.css">
+  <!-- Three.js para el retrato 3D (js/face-tracker.js). Versión fija; solo se
+       descarga en páginas que tienen el retrato. -->
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js"}}</script>
 </head>
 
 <body>
@@ -71,7 +74,6 @@ layout: compress
 <script src="{{ site.baseurl }}/js/terminal.js" defer></script>
 <script src="{{ site.baseurl }}/js/scanlines.js" defer></script>
 <script src="{{ site.baseurl }}/js/glitch.js" defer></script>
-<script src="{{ site.baseurl }}/avatar/avatar-alvaro.js" defer></script>
-<script src="{{ site.baseurl }}/js/face-tracker.js" defer></script>
+<script type="module" src="{{ site.baseurl }}/js/face-tracker.js"></script>
 </body>
 </html>
