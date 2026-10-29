@@ -10,7 +10,7 @@
 // acerca y el otro se aleja. En reposo la imagen queda idéntica al original.
 //
 // Límite: es una sola foto frontal con relieve, no un modelo completo. Por eso
-// el giro está limitado (~30° lateral, ~15° vertical): más allá se notaría que no hay perfil.
+// el giro está limitado (~23° lateral, ~11° vertical): más allá se notaría que no hay perfil.
 //
 // Es un módulo: se ejecuta después de main.js, así que CONFIG ya existe.
 // Respeta ENABLE_FACE_TRACKER, prefers-reduced-motion y se detiene cuando no
@@ -37,10 +37,13 @@ const VERTEX = /* glsl */ `
   // Relieve de la cara en coordenadas de imagen.
   float headDepth(vec2 p) {
     vec2 d = (p - vec2(0.505, 0.33)) / vec2(0.235, 0.335);
-    float head = sqrt(max(0.0, 1.0 - dot(d, d))) * 0.15;
+    // Perfil suave (smoothstep): pendiente nula en el borde, así orejas y sienes
+    // no se estiran al girar (una media esfera las deformaba).
+    float r = min(length(d), 1.0);
+    float head = (1.0 - r * r * (3.0 - 2.0 * r)) * 0.13;
     head *= 1.0 - smoothstep(0.56, 0.68, p.y);
     vec2 dn = (p - vec2(0.511, 0.425)) / vec2(0.026, 0.055);
-    float nose = exp(-dot(dn, dn)) * 0.035;
+    float nose = exp(-dot(dn, dn)) * 0.03;
     vec2 e1 = (p - vec2(0.4445, 0.352)) / vec2(0.045, 0.022);
     vec2 e2 = (p - vec2(0.573, 0.354)) / vec2(0.045, 0.022);
     float sockets = (exp(-dot(e1, e1)) + exp(-dot(e2, e2))) * 0.010;
@@ -74,7 +77,7 @@ const VERTEX = /* glsl */ `
     r.y += uBreath * w;
 
     // Perspectiva relativa al reposo: sin giro, la imagen es idéntica al original.
-    float focal = 3.2;
+    float focal = 4.2;
     vec2 centre = vec2(0.0, 0.3);
     float k = (focal - p.z) / (focal - r.z);
     vec2 xy = centre + (r.xy - centre) * k;
@@ -136,8 +139,8 @@ const FRAGMENT = /* glsl */ `
   }
 `;
 
-const MAX_YAW = 0.55;   // giro lateral máximo (~30°)
-const MAX_PITCH = 0.26; // cabeceo máximo (~15°)
+const MAX_YAW = 0.40;   // giro lateral máximo (~23°)
+const MAX_PITCH = 0.20; // cabeceo máximo (~11°)
 
 async function start(stage) {
   const THREE = await import("three");
