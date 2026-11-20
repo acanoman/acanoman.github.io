@@ -2,18 +2,16 @@
   color-scheme: dark;
 
   --color-background: #0a0e0a;
-  --color-surface: #101710;
-  --color-surface-raised: #151e16;
+  --color-surface: rgb(16 23 16 / 90%);
+  --color-surface-raised: rgb(21 30 22 / 94%);
   --color-border: #29372b;
   --color-accent: #8fbd73;
   --color-accent-strong: #b4e38f;
   --color-amber: #e1b45e;
   --color-text: #c8d6c8;
   --color-text-muted: #8c9b8d;
-  --color-header-overlay: rgb(10 14 10 / 94%);
+  --color-header-overlay: rgb(10 14 10 / 90%);
   --color-shadow: rgb(0 0 0 / 22%);
-  --color-portrait-glow: #0f1726;
-  --color-scan: rgb(143 189 115 / 16%);
 
   --font-body: "Space Grotesk", "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", Consolas, monospace;

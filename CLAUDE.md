@@ -52,7 +52,7 @@ Objetivo: que quede **moderna, oscura, "cyberdefensa", con movimiento**, pero **
 - **Boot screen** inicial al cargar: texto tipo `INITIALIZING SECURE CHANNEL...` con efecto de descifrado/tecleo, breve (no más de 2 s, con opción de saltar).
 - **Marcos HUD** con esquinas cortadas (clip-path) para las tarjetas de secciones.
 - **Scanlines** sutiles y ruido/grano muy ligero encima de todo (baja opacidad).
-- **Efecto "cara que sigue al ratón"**: un retrato mío estilo hacker con capucha que mira hacia donde está el cursor (ver sección 6, es un apartado especial).
+- **Máscara 3D animada**: la máscara de código se integra como fondo a pantalla completa y orienta la mirada hacia el cursor (ver sección 6).
 - Animaciones al hacer scroll (reveal suave de cada sección).
 - Micro-glitch ocasional en títulos (muy sutil).
 
@@ -100,12 +100,11 @@ acanoman.github.io/
 │   ├── crosshair.js        # Cursor de mira + coordenadas X/Y
 │   ├── terminal.js         # Terminal simulada y sus comandos
 │   ├── boot.js             # Pantalla de arranque inicial
-│   └── face-tracker.js     # Cara que sigue al ratón (ver sección 6)
+├── mascara.js              # Componente autocontenido de la máscara animada
 ├── apuntes/
 │   └── index.html          # Mis apuntes, con los MISMOS estilos de la web
 ├── assets/
-│   ├── img/                # Imágenes (incluida la cara generada)
-│   └── faces/              # Rejilla de imágenes del face-tracker
+│   └── img/                # Imágenes del sitio
 ├── _layouts/               # Plantillas Jekyll (default, post, page)
 ├── _posts/                 # Artículos del blog
 └── README.md
@@ -115,7 +114,7 @@ Reglas de código:
 - Indentación 2 espacios. Nombres de clases en `kebab-case`. Nada de `!important` salvo imprescindible.
 - CSS: define TODOS los colores/fuentes/espaciados como variables en `css/variables.css` (`:root`). No pongas colores a pelo repartidos por el código.
 - JS: cada efecto en su archivo, bien separado. Comentarios en español, breves.
-- Cada efecto "caro" (mira, boot, glitch, partículas, face-tracker) debe poder **activarse/desactivarse** con una constante al principio de su archivo o un flag en `main.js` (ver sección 7).
+- Cada efecto "caro" (mira, boot, glitch, partículas, máscara) debe poder **activarse/desactivarse** con una constante al principio de su archivo o un flag en `main.js` (ver sección 7).
 - HTML semántico (`<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`).
 
 ---
@@ -166,9 +165,15 @@ Comportamiento: la terminal es una **capa de navegación alternativa**, no susti
 
 ---
 
-## 6. Face-tracker (la cara que sigue al ratón) — apartado especial
+## 6. Máscara 3D como fondo
 
-Quiero un **retrato mío estilo hacker con capucha** que **mire hacia donde está el cursor**, como el efecto de `stephanewillems.be` / los "face looker".
+La especificación histórica de face-tracker que sigue ya no aplica. El diseño vigente es la máscara de código suministrada en `mascara-para-web`.
+
+- `mascara.js` es un componente autocontenido, cargado desde `_layouts/default.html`; no requiere CDN ni instalación de dependencias.
+- Se monta con `<mascara-umbral fondo aria-hidden="true">` como fondo fijo a pantalla completa, detrás del contenido en todas las páginas.
+- El componente no representa a Álvaro ni utiliza su foto. El retrato y el script anterior se eliminan del sitio.
+- La máscara no intercepta interacciones y respeta `prefers-reduced-motion` mostrando una pose estática. `ENABLE_MASK_BACKGROUND` en `js/main.js` permite apagarla.
+- Ajusta la opacidad de la máscara y las superficies translúcidas para mantener el texto legible en escritorio y móvil.
 
 Cómo funciona la técnica (vanilla, sin framework):
 - Se usa una **rejilla de imágenes** del mismo rostro mirando en distintas direcciones (arriba, abajo, izquierda, derecha y diagonales).
@@ -196,7 +201,7 @@ const CONFIG = {
   ENABLE_TERMINAL: true,
   ENABLE_SCANLINES: true,
   ENABLE_GLITCH: true,
-  ENABLE_FACE_TRACKER: false, // se activa cuando haya foto real
+  ENABLE_MASK_BACKGROUND: true,
   ENABLE_PARTICLES: false,    // opcional, de inicio apagado
 };
 ```
@@ -214,7 +219,7 @@ Trabajamos por **fases pequeñas**. No lo hagas todo de una vez. Orden sugerido:
 - **Fase 2 — Terminal:** terminal simulada con los comandos de la sección 5.
 - **Fase 3 — HUD + boot + scanlines + glitch:** la capa estética.
 - **Fase 4 — Apuntes:** adaptar mi HTML de apuntes a los estilos de la web (ver sección 10).
-- **Fase 5 — Face-tracker:** primero placeholder, luego mi foto.
+- **Fase 5 — Fondo animado:** integrar la máscara 3D a pantalla completa.
 - **Fase 6 — Pulido:** responsive, accesibilidad, rendimiento, revisión final.
 
 Reglas del flujo:
@@ -333,7 +338,7 @@ Cuando yo te diga de empezar, arranca por la **Fase 0** de la sección 8: crea l
 - **Fuente:** `github.com/fofr/face_looker`, licencia MIT — se reutiliza el esquema de nombres y la lógica de mapeo citando la licencia; no se reutilizan assets ni imágenes.
 - **Decisión frente a la alternativa 3D:** la ficha de [Awwwards de stephanewillems.be](https://www.awwwards.com/sites/stephane-willems-developer) lo etiqueta como "3D", lo que indica que su personaje es muy probablemente un modelo 3D con Three.js/WebGL cuya cabeza gira de forma continua hacia el cursor (técnica documentada en tutoriales públicos como el de [Codrops](https://tympanus.net/codrops/2019/10/14/how-to-create-an-interactive-3d-character-with-three-js/) o [Wael Yasmina](https://waelyasmina.net/articles/how-to-make-a-models-head-follow-the-cursor-in-three-js/)), no una rejilla de imágenes 2D.
 
-- **✅ SOLUCIÓN ACTUAL (29/10/2026): Three.js con relieve sobre la imagen.** Álvaro pidió que la cabeza **gire** como una persona (no que se incline de lado) y aprobó usar Three.js. `js/face-tracker.js` (módulo ES) carga Three.js `0.169.0` por CDN mediante un import map en `_layouts/default.html`. Pone `avatar/assets/alvaro.png` sobre una malla muy subdividida y, en el vertex shader, le da relieve procedural calibrado a esa imagen (cráneo con perfil suave (smoothstep, sin pendiente en el borde para no estirar orejas ni sienes), nariz, cuencas de los ojos, cuello). La zona de la cabeza rota en 3D alrededor de la base del cuello (~23° lateral, ~11° vertical) con perspectiva relativa al reposo, de modo que sin giro la imagen es idéntica al original; hombros y pecho tienen peso 0 y no se mueven. Estética (desde el 29/10/2026, inspirada en stephanewillems.be sin copiar su modelo): busto en penumbra con luces fijas de la escena (azul fría arriba a la izquierda, contraluz verdoso por la derecha), foto desaturada y facetas low-poly (malla de 34x34 con vértices desordenados y normal plana mezclada con la suave). Al girar, la luz se mueve sobre la cara. Solo gira la cabeza: sin parpadeo, mirada ni respiración. Los valores de luz están en el objeto `LOOK` al principio del archivo. Si un shader no compila, se mantiene la foto de respaldo. Respeta `ENABLE_FACE_TRACKER`, `prefers-reduced-motion` (pinta el retrato quieto) y si WebGL falla queda la `<img>` de respaldo. Verificado en Chrome headless en las cinco poses y a tamaño grande en la unión del cuello.
+- **Implementación anterior (29/10/2026, sustituida):** Three.js con relieve sobre la imagen, descrita a continuación únicamente como referencia histórica.
   - **Límite:** sigue siendo una sola foto frontal con relieve inventado, no un escaneo ni un modelo completo: no hay perfil real, por eso el giro está limitado. Si algún día hay un modelo `.glb` real de su cabeza, se puede cargar con `GLTFLoader` en el mismo archivo.
   - Si se cambia la imagen, hay que recalibrar las coordenadas del relieve y de los ojos en los shaders.
 

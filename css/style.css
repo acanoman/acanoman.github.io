@@ -6,6 +6,7 @@ body {
   font-size: 1rem;
   line-height: 1.7;
   text-rendering: optimizeLegibility;
+  isolation: isolate;
 }
 
 a {
@@ -105,14 +106,46 @@ main:focus {
 }
 
 .page-shell {
+  position: relative;
+  z-index: 1;
   padding-block: var(--space-6) var(--space-8);
 }
 
 .hero {
   display: grid;
-  min-height: min(42rem, calc(100svh - var(--header-height)));
+  min-height: calc(100svh - var(--header-height) - var(--space-6));
   align-content: center;
   padding-block: var(--space-7);
+}
+
+.page-mask {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  background: radial-gradient(ellipse at 74% 49%, #122727 0%, #0e1919 32%, transparent 66%);
+  mask-image: linear-gradient(90deg, transparent 0%, #0005 28%, #000 59%);
+  opacity: 0.3;
+}
+
+.page-mask[hidden] {
+  display: none;
+}
+
+.mask-intro .page-mask {
+  opacity: 0.95;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-mask {
+    transition: opacity 400ms ease;
+  }
 }
 
 .eyebrow,
@@ -304,6 +337,8 @@ h3 {
 }
 
 .site-footer {
+  position: relative;
+  z-index: 1;
   border-top: 1px solid var(--color-border);
 }
 
@@ -701,120 +736,8 @@ code {
   }
 }
 
-/* --- Hero dividido: retrato encapuchado + terminal integrada (Opción A) --- */
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: var(--space-6);
-  align-items: center;
-  width: 100%;
-}
-
-.hero-portrait {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-/* Marco HUD del retrato: esquinas cortadas + borde de acento con drop-shadow
-   (un border normal no seguiría el clip-path). */
-/* El borde de acento va en el envoltorio: si estuviera en .portrait-frame,
-   su propio clip-path lo recortaría (el filter se aplica antes del recorte). */
-.portrait-shell {
-  width: min(100%, 24rem);
-  filter:
-    drop-shadow(1px 0 0 var(--color-accent))
-    drop-shadow(-1px 0 0 var(--color-accent))
-    drop-shadow(0 1px 0 var(--color-accent))
-    drop-shadow(0 -1px 0 var(--color-accent))
-    drop-shadow(0 1.1rem 2.2rem var(--color-shadow));
-}
-
-.portrait-frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  overflow: hidden;
-  /* Fondo con brillo verde: el avatar es transparente y lo adopta. */
-  background: radial-gradient(circle at 50% 38%, var(--color-portrait-glow), var(--color-background) 72%);
-  clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
-}
-
-/* Escenario del retrato 3D. La imagen de respaldo ocupa el mismo hueco y
-   ocupa el mismo encuadre que el lienzo (0.96 = margen que deja el shader). */
-.avatar-stage {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.avatar-fallback,
-.avatar-canvas {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.avatar-fallback {
-  padding: 2%;
-  object-fit: contain;
-}
-
-.avatar-stage.is-3d .avatar-fallback {
-  display: none;
-}
-
-/* Línea de escaneo que recorre el retrato de vez en cuando. */
-.portrait-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 18%;
-  background: linear-gradient(to bottom, transparent, var(--color-scan), transparent);
-  pointer-events: none;
-  transform: translateY(-100%);
-  animation: portrait-scan 6s ease-in-out infinite;
-}
-
-@keyframes portrait-scan {
-  0%, 55% { transform: translateY(-100%); }
-  100% { transform: translateY(560%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .portrait-frame::after {
-    animation: none;
-    display: none;
-  }
-}
-
-/* Fondo propio para que la línea de la capucha no cruce el texto. */
-.portrait-hud {
-  position: absolute;
-  z-index: 1;
-  padding: 2px 5px;
-  background: var(--color-header-overlay);
-  color: var(--color-accent);
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-}
-
-.portrait-hud-tl { top: 8px; left: 10px; }
-.portrait-hud-br { bottom: 8px; right: 10px; }
-
-.portrait-caption {
-  color: var(--color-amber);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-}
-
 .hero-console {
+  width: min(53%, 38rem);
   min-width: 0;
 }
 
@@ -833,6 +756,8 @@ code {
 }
 
 .hero-terminal {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   height: 19rem;
@@ -856,31 +781,20 @@ code {
   background: var(--color-border);
 }
 
-@media (max-width: 52rem) {
-  .hero-grid {
-    /* minmax(0, 1fr) deja que la columna se encoja: sin esto, el texto largo
-       del rol y la terminal desbordan y aparece scroll horizontal. */
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-5);
-    justify-items: center;
-    text-align: center;
-  }
-
-  .hero-portrait {
-    order: -1;
-    width: 100%;
-  }
-
-  .portrait-shell {
-    width: min(72%, 17rem);
-  }
-
+@media (max-width: 760px) {
   .hero-console {
-    width: 100%;
+    width: min(100%, 38rem);
   }
 
   .hero-console h1 {
     max-width: none;
+  }
+
+  .hero {
+    justify-items: center;
+    text-align: center;
+    min-height: auto;
+    padding-block: var(--space-1) var(--space-7);
   }
 
   .hero-role {
@@ -894,6 +808,24 @@ code {
 
   .hero-actions {
     justify-content: center;
+  }
+
+  .page-mask {
+    background: radial-gradient(ellipse at 51% 50%, #142b2b, transparent 65%);
+    mask-image: linear-gradient(180deg, transparent 15%, #0002 27%, #000 46%, #000 64%, #0004 96%);
+  }
+
+  .site-header {
+    min-height: 0;
+  }
+
+  .page-shell:has(.hero) {
+    padding-block-start: var(--space-4);
+  }
+
+  /* El espacio entre el título y la consola deja ver el rostro en vertical. */
+  .page-mask:defined:not([hidden]) ~ .page-shell .hero-terminal {
+    margin-top: clamp(9rem, 44svh, 27rem);
   }
 }
 

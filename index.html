@@ -5,44 +5,27 @@ layout: default
 ---
 
 <section class="hero reveal" id="top" aria-labelledby="hero-title">
-    <div class="hero-grid">
-        <div class="hero-portrait">
-            <!-- Retrato 3D (js/face-tracker.js, Three.js): la cabeza gira hacia el cursor.
-                 La <img> es el respaldo si WebGL no está disponible o el flag está apagado. -->
-            <div class="portrait-shell">
-            <div class="portrait-frame" id="face-tracker">
-                <div class="avatar-stage" data-avatar-3d data-src="{{ site.baseurl }}/avatar/assets/alvaro.png">
-                    <img class="avatar-fallback" src="{{ site.baseurl }}/avatar/assets/alvaro.png" alt="Retrato de Álvaro Cano Mantero" width="400" height="400">
-                </div>
-                <span class="portrait-hud portrait-hud-tl">SUBJECT</span>
-                <span class="portrait-hud portrait-hud-br">A. CANO</span>
+    <div class="hero-console">
+        <p class="eyebrow">Portfolio · Seguridad ofensiva</p>
+        <h1 id="hero-title" class="glitch-text" data-text="Álvaro Cano">Álvaro <span>Cano</span></h1>
+        <p class="hero-role">Cybersecurity Engineer · Red Team · Pentesting</p>
+
+        <div class="hero-terminal" role="region" aria-label="Terminal de navegación">
+            <div class="terminal-header">
+                <span class="terminal-title">visitor@acano: ~</span>
+                <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>
             </div>
+            <div id="hero-terminal-output" class="terminal-output" role="log"></div>
+            <div class="terminal-input-row">
+                <span class="terminal-prompt" aria-hidden="true">visitor@acano:~$</span>
+                <span class="terminal-cursor" aria-hidden="true"></span>
+                <input id="hero-terminal-input" class="terminal-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="escribe help y pulsa Enter" aria-label="Escribe un comando y pulsa Enter">
             </div>
-            <p class="portrait-caption"><span aria-hidden="true">[</span> TARGET: ACQUIRED <span aria-hidden="true">]</span></p>
         </div>
 
-        <div class="hero-console">
-            <p class="eyebrow">Portfolio · Seguridad ofensiva</p>
-            <h1 id="hero-title" class="glitch-text" data-text="Álvaro Cano">Álvaro <span>Cano</span></h1>
-            <p class="hero-role">Cybersecurity Engineer · Red Team · Pentesting</p>
-
-            <div class="hero-terminal" role="region" aria-label="Terminal de navegación">
-                <div class="terminal-header">
-                    <span class="terminal-title">visitor@acano: ~</span>
-                    <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-                </div>
-                <div id="hero-terminal-output" class="terminal-output" role="log"></div>
-                <div class="terminal-input-row">
-                    <span class="terminal-prompt" aria-hidden="true">visitor@acano:~$</span>
-                    <span class="terminal-cursor" aria-hidden="true"></span>
-                    <input id="hero-terminal-input" class="terminal-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="escribe help y pulsa Enter" aria-label="Escribe un comando y pulsa Enter">
-                </div>
-            </div>
-
-            <div class="hero-actions">
-                <a class="button-link" href="#about">Explorar perfil <span aria-hidden="true">↓</span></a>
-                <a class="button-link button-link-secondary" href="#contact">Contacto</a>
-            </div>
+        <div class="hero-actions">
+            <a class="button-link" href="#about">Explorar perfil <span aria-hidden="true">↓</span></a>
+            <a class="button-link button-link-secondary" href="#contact">Contacto</a>
         </div>
     </div>
 </section>

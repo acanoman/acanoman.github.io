@@ -6,10 +6,22 @@ const CONFIG = {
   ENABLE_TERMINAL: true,
   ENABLE_SCANLINES: true,
   ENABLE_GLITCH: true,
-  ENABLE_FACE_TRACKER: true, // placeholder (silueta): inclina y mueve los ojos. Foto real en Fase 5
+  ENABLE_MASK_BACKGROUND: true,
   ENABLE_PARTICLES: false,
 };
 window.CONFIG = CONFIG;
+
+const maskBackground = document.querySelector(".page-mask");
+if (maskBackground) {
+  maskBackground.hidden = !CONFIG.ENABLE_MASK_BACKGROUND;
+  const hero = document.querySelector(".hero");
+  if (CONFIG.ENABLE_MASK_BACKGROUND && hero && "IntersectionObserver" in window) {
+    const contrastObserver = new IntersectionObserver(([entry]) => {
+      document.body.classList.toggle("mask-intro", entry.isIntersecting);
+    }, { threshold: 0, rootMargin: "-15% 0px -15% 0px" });
+    contrastObserver.observe(hero);
+  }
+}
 
 // Revelado discreto de secciones al entrar en pantalla.
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
