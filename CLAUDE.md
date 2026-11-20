@@ -175,6 +175,8 @@ La especificación histórica de face-tracker que sigue ya no aplica. El diseño
 - La máscara no intercepta interacciones y respeta `prefers-reduced-motion` mostrando una pose estática. `ENABLE_MASK_BACKGROUND` en `js/main.js` permite apagarla.
 - Ajusta la opacidad de la máscara y las superficies translúcidas para mantener el texto legible en escritorio y móvil.
 
+### Técnica histórica: face-tracker (no vigente)
+
 Cómo funciona la técnica (vanilla, sin framework):
 - Se usa una **rejilla de imágenes** del mismo rostro mirando en distintas direcciones (arriba, abajo, izquierda, derecha y diagonales).
 - Un script mapea la posición del ratón a coordenadas normalizadas y **cambia la imagen** a la que corresponde a esa dirección.
